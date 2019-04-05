@@ -3,21 +3,21 @@
 
 
 int main() {
-    char* cmdline;
     char** arglist;
+    char* cmdline;
     char* prompt = PROMPT;   
     while((cmdline = read_cmd(prompt,stdin))){
-       if((arglist = tokenize(cmdline))){
-          execute(arglist);
-          //  need to free arglist
-          for(int k = 0; k < MAXARGS + 1; ++k)
-	          free(arglist[k]);
-          free(arglist);
-          free(cmdline);
-       }
-   }
-   printf("\n");
-   return 0;
+        if((arglist = tokenize(cmdline))){
+            execute(arglist);
+            //  need to free arglist
+           for(int k = 0; k < MAXARGS + 1; ++k)
+               free(arglist[k]);
+               free(arglist);
+               free(cmdline);
+         }
+    }
+    printf("\n");
+    return 0;
 }
 
 
@@ -30,7 +30,7 @@ int execute(char* arglist[]){
           fprintf(stderr, "Fork is failed for some reason.\n");
 	      exit(1);
       case 0:
-	      execvp(arglist[0], arglist);
+	      execvp(arglist[0], arglist); // second parameter is arglist because name of the program is an argument too
  	      perror("Command not found...");
 	      exit(1);
       default:
@@ -55,7 +55,7 @@ char** tokenize(char* cmdline){
         strcpy(arglist[arg_ind], token);
         token = strtok(NULL, " \t");
     }
-    printf("arg num : %d\n", arg_ind);
+    //printf("arg num : %d\n", arg_ind);
     arglist[arg_ind] = NULL;
     return arglist;
 }      

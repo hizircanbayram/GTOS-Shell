@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     else {
         fprintf(stderr, "Invalud number of arguments are supplied.\n");
     }
-
+    return 0;
 }
 
 

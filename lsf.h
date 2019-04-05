@@ -11,7 +11,7 @@ curFileStat : struct of the file that keeps its infos
 pipeArr : addresses of pipe, if it is written into a pipe
 redirectFileName : name of the file where I/O is redirected to
 */
-void writeInfos(const char *fileName, const struct stat curFileStat, const int *pipeArr, const char *redirectFileName, int isPipe);
+void writeInfos(const char *fileName, const struct stat curFileStat, const int *pipeArr, FILE* redirect_fp,  const char *opr);
 
 void directoryOpenControl(const DIR* curDirPtr);
 void statOpenControl(int statRetVal, const char *name);
