@@ -37,7 +37,7 @@ int execute(char* arglist[], int argc){
     }
     else if ((!strcmp("./pwd", arglist[0]) && (argc > 1) && (!strcmp("|", arglist[1])))) {
         //printf("pwd with pipe\n");
-        return execWithPipe(arglist); 
+        return execWithPipe(arglist[0], NULL, arglist[2]); 
     }
 
     else if ((!strcmp("./lsf", arglist[0]) && (argc == 1))) {
@@ -46,30 +46,40 @@ int execute(char* arglist[], int argc){
     }
     else if ((!strcmp("./lsf", arglist[0]) && (argc > 1) && (!strcmp("|", arglist[1])))) {
         //printf("lsf with pipe\n");
-        return execWithPipe(arglist); 
+        return execWithPipe(arglist[0], NULL, arglist[2]); 
     }
 
     else if ((strcmp("./lsf", arglist[0]) && (strcmp("./pwd", arglist[0])))) {
-        if ((argc > 1) && (strcmp(arglist[1], "|")))
-            printf("other without pipe\n");
-        if ((argc > 1) && (!strcmp(arglist[1], "|")))
-            printf("other with pipe\n");
-        if ((argc == 1))
-            printf("other without pipe\n");
+        if ((argc > 2) && (strcmp(arglist[2], "|"))) {
+            //printf("other without pipe\n");
+            return execWithoutPipe(arglist);
+        }
+        if ((argc > 3) && (!strcmp(arglist[2], "|"))) {
+            //printf("other with pipe\n");
+            return execWithPipe(arglist[0], arglist[1], arglist[3]); 
+        }
+        if ((argc == 1)) {
+            //printf("other without pipe\n");
+            return execWithoutPipe(arglist);
+        }
     }
     return execWithoutPipe(arglist);
 }
 
 
 
-int execWithPipe(char *arglist[]) {
+int execWithPipe(const char *cmd1, const char *cmd2, const char *cmd3) {
+    printf("(%s) (%s) (%s)\n", cmd1, cmd2, cmd3);
+}
+
+/*int execWithPipe(char *arglist[]) {
     if(!strcmp("pwd", arglist[0])) {    // if the command is pwd, pipe token is in arglist[1]
 
     }
     else { // pipe token is in arglist[2] otherwise
 
     }
-}
+}*/
 
 
 
