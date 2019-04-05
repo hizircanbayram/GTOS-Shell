@@ -5,6 +5,7 @@
 #include    <stdlib.h>
 #include    <string.h>
 
+
 #define CAT_ONE_ARG(argc) ((argc == 2) ? 1 : 0)
 #define CAT_REDIRECT(argc) (((argc == 3) || (argc == 4)) ? 1 : 0)
 

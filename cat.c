@@ -4,7 +4,13 @@
 
 int main(int argc, char **argv) {
     int pipeArr[2];
-    if (CAT_ONE_ARG(argc)) {
+    char c;
+    if (argc == 1) {
+        while (scanf("%c", &c) != EOF) {
+           printf("%c", c); 
+        }
+    }
+    else if (CAT_ONE_ARG(argc)) {
         writeTo(argv[1], ONE_ARGUMENT, pipeArr, NULL); 
     }
     else if (CAT_REDIRECT(argc)) {

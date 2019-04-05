@@ -67,19 +67,66 @@ int execute(char* arglist[], int argc){
 }
 
 
-
+// The Linux Programming Interface p900, originated
 int execWithPipe(const char *cmd1, const char *cmd2, const char *cmd3) {
-    printf("(%s) (%s) (%s)\n", cmd1, cmd2, cmd3);
+	int pfd[2]; /* Pipe file descriptors */
+	if (pipe(pfd) == -1) /* Create pipe */
+         fprintf(stderr, "execlp");
+	switch (fork()) {
+	 	case -1:
+            fprintf(stderr, "execlp");
+	 	case 0: /* First child: exec 'ls' to write to pipe */
+	 		if (close(pfd[0]) == -1) /* Read end is unused */
+            fprintf(stderr, "execlp");
+ 			if (pfd[1] != STDOUT_FILENO) { /* Defensive check */
+ 				if (dup2(pfd[1], STDOUT_FILENO) == -1)
+                    fprintf(stderr, "execlp");
+ 				if (close(pfd[1]) == -1)
+                    fprintf(stderr, "execlp");
+ 			}
+            if (!strcmp("./pwd", cmd1)) {
+                execlp(cmd1, cmd1, (char *) NULL);
+            }
+            else if (!strcmp("./lsf", cmd1)) {
+                execlp(cmd1, cmd1, (char *) NULL);
+            }
+            else if ((!strcmp("./bunedu", cmd1)) || (!strcmp("./cat", cmd1)) || (!strcmp("./wc", cmd1))) {
+                execlp(cmd1, cmd1, cmd2, (char *) NULL);
+            }
+            fprintf(stderr, "execlp");
+ 		default: /* Parent falls through to create next child */
+ 			break;
+ 	}
+ 	
+ 	switch (fork()) {
+ 		case -1:
+            fprintf(stderr, "execlp");
+ 		case 0: /* Second child: exec 'wc' to read from pipe */
+ 			if (close(pfd[1]) == -1) /* Write end is unused */
+                fprintf(stderr, "execlp");
+ 			/* Duplicate stdin on read end of pipe; close duplicated descriptor */
+ 			if (pfd[0] != STDIN_FILENO) { /* Defensive check */
+ 				if (dup2(pfd[0], STDIN_FILENO) == -1)
+                    fprintf(stderr, "execlp");
+ 				if (close(pfd[0]) == -1)
+                    fprintf(stderr, "execlp");
+ 			}
+ 			execlp(cmd3, cmd3, (char *) NULL); /* DEGISECEK!!! */
+            fprintf(stderr, "execlp");
+ 		default: /* Parent falls through */
+ 			break;
+ 	}
+
+ 	if (close(pfd[0]) == -1)
+        fprintf(stderr, "execlp");
+ 	if (close(pfd[1]) == -1)
+        fprintf(stderr, "execlp");
+ 	if (wait(NULL) == -1)
+        fprintf(stderr, "execlp");
+ 	if (wait(NULL) == -1)
+        fprintf(stderr, "execlp");
+ 	exit(EXIT_SUCCESS);
 }
-
-/*int execWithPipe(char *arglist[]) {
-    if(!strcmp("pwd", arglist[0])) {    // if the command is pwd, pipe token is in arglist[1]
-
-    }
-    else { // pipe token is in arglist[2] otherwise
-
-    }
-}*/
 
 
 

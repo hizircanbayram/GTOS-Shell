@@ -4,7 +4,16 @@
 
 int main(int argc, char **argv) {
     int pipeArr[2];
-    if (WC_ONE_ARG(argc)) {
+    char c;
+    int lineNumber = 0;
+    if (argc == 1) {
+        while (scanf("%c", &c) != EOF) {
+            if (c == '\n')
+                ++lineNumber;
+        }
+        printf("%d\n", lineNumber);
+    }
+    else if (WC_ONE_ARG(argc)) {
         wcTo(argv[1], ONE_ARGUMENT, pipeArr, NULL); 
     }
     else if (WC_REDIRECT(argc)) {

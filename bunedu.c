@@ -6,9 +6,22 @@ int isOption = 0;
 
 // 1 : ard_ind
 int main(int argc, char **argv) {	
+    printf("\n\nBUNEDU\n\n");
+    printf("argc : %d\n", argc);
     int pipeArr[2];
     int arg_ind = 1;
     int arg_limit = 2;
+    if (argc == 1) {
+        char c;
+        char pathName[1024] = { 0 };
+        int i = 0;
+        while (scanf("%c", &c) != EOF) {
+           pathName[i++] = c; 
+        }
+        pathName[i] = '\0';
+        postOrderApply(pathName, sizepathfun, pipeArr, NULL, argc, argv, NULL);
+        return 1;
+    }
     if (!strcmp("-z", argv[1])) {
         arg_ind = 2;
         arg_limit += 1;
