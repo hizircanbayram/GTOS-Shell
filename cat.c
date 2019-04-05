@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
 void writeTo(const char *fileName, int flag, const int *pipeArr, const char *redirectFileName) {
     FILE *fp = fopen(fileName, "r");
     if (!fp && fileName) {
-        fprintf(stderr, "File %s couldn't be opened for some reason.\n", fileName);
+        fprintf(stderr, "CAT | Reading file %s for printing couldn't be opened for some reason.\n", fileName);
         exit(EXIT_FAILURE);
     }
     if (ONE_ARGUMENT == flag) {
@@ -62,6 +62,7 @@ void writeTo(const char *fileName, int flag, const int *pipeArr, const char *red
             free(line);        
             line = NULL;
         }
+        fclose(redirect_fp);
     }
     else if (OUTPUT_REDIRECT == flag) {
         char *line = NULL;
@@ -76,7 +77,7 @@ void writeTo(const char *fileName, int flag, const int *pipeArr, const char *red
             free(line);        
             line = NULL;
         }
-
+        fclose(redirect_fp);
     } 
     else if (PIPE_REDIRECT == flag) {
 
@@ -84,4 +85,5 @@ void writeTo(const char *fileName, int flag, const int *pipeArr, const char *red
     else {
         fprintf(stderr, "There is a bug in design of the program. writeTo function else statement is executed.\n");
     }
+    fclose(fp);
 }
