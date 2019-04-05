@@ -23,6 +23,34 @@ int main() {
 
 
 int execute(char* arglist[]){
+    if(!strcmp("pwd", arglist[0]) && !strcmp("|", arglist[1])) {    // if the command is pwd, pipe token is in arglist[1]
+        return execWithPipe(arglist);
+    }
+    else {
+        return execWithoutPipe(arglist);
+    }
+    if (strcmp("pwd", arglist[0]) && !strcmp("|", arglist[2])) { // pipe token is in arglist[2] otherwise
+        return execWithPipe(arglist);
+    }
+    else {
+        return execWithoutPipe(arglist);
+    }
+}
+
+
+
+int execWithPipe(char *arglist[]) {
+    if(!strcmp("pwd", arglist[0])) {    // if the command is pwd, pipe token is in arglist[1]
+
+    }
+    else { // pipe token is in arglist[2] otherwise
+
+    }
+}
+
+
+
+int execWithoutPipe(char *arglist[]) {
    int status;
    int pid = fork();
    switch(pid) {

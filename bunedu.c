@@ -34,8 +34,8 @@ int main(int argc, char **argv) {
                 exit(EXIT_FAILURE);
             }
             char *line = NULL;
-            int redirect_flag = 0;
-            size_t redirect_len = getline(&line, &redirect_flag, redirect_fp);
+            size_t redirect_flag = 0;
+            ssize_t redirect_len = getline(&line, &redirect_flag, redirect_fp);
             line[redirect_len - 1] = '\0';
             fprintf(redirect_fp, "%s", line);
             postOrderApply(line, sizepathfun, pipeArr, NULL, argc, argv, NULL);

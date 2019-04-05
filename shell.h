@@ -14,6 +14,8 @@
 #define PROMPT "GTOS-Shell: "
 
 int execute(char* arglist[]);
+int execWithPipe(char *arglist[]);
+int execWithoutPipe(char *arglist[]);
 char** tokenize(char* cmdline);
 char* read_cmd(char* prompt, FILE* fp);
 
