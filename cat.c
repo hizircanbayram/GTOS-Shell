@@ -2,7 +2,6 @@
 
 
 
-
 int main(int argc, char **argv) {
     int pipeArr[2];
     if (CAT_ONE_ARG(argc)) {
