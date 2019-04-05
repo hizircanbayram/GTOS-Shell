@@ -6,15 +6,16 @@ int main() {
     char** arglist;
     char* cmdline;
     char* prompt = PROMPT;   
+    int argNumber = 0;
     while((cmdline = read_cmd(prompt,stdin))){
-        if((arglist = tokenize(cmdline))){
-            execute(arglist);
+        if((arglist = tokenize(cmdline, &argNumber))){
+            execute(arglist, argNumber);
             //  need to free arglist
-           for(int k = 0; k < MAXARGS + 1; ++k)
-               free(arglist[k]);
-               free(arglist);
-               free(cmdline);
-         }
+            for(int k = 0; k < MAXARGS + 1; ++k)
+                free(arglist[k]);
+                free(arglist);
+                free(cmdline);
+        }
     }
     printf("\n");
     return 0;
@@ -22,19 +23,41 @@ int main() {
 
 
 
-int execute(char* arglist[]){
-    if(!strcmp("pwd", arglist[0]) && !strcmp("|", arglist[1])) {    // if the command is pwd, pipe token is in arglist[1]
-        return execWithPipe(arglist);
-    }
-    else {
+int execute(char* arglist[], int argc){
+    if ((strcmp("./pwd", arglist[0])) &&
+        (strcmp("./lsf", arglist[0]))  &&
+        (strcmp("./cat", arglist[0])) &&
+        (strcmp("./wc", arglist[0]))  &&
+        (strcmp("./bunedu", arglist[0])) )
+        return -1;
+
+    if ((!strcmp("./pwd", arglist[0]) && (argc == 1))) {
+        //printf("pwd without pipe\n");
         return execWithoutPipe(arglist);
     }
-    if (strcmp("pwd", arglist[0]) && !strcmp("|", arglist[2])) { // pipe token is in arglist[2] otherwise
-        return execWithPipe(arglist);
+    else if ((!strcmp("./pwd", arglist[0]) && (argc > 1) && (!strcmp("|", arglist[1])))) {
+        //printf("pwd with pipe\n");
+        return execWithPipe(arglist); 
     }
-    else {
+
+    else if ((!strcmp("./lsf", arglist[0]) && (argc == 1))) {
+        //printf("lsf without pipe\n");
         return execWithoutPipe(arglist);
     }
+    else if ((!strcmp("./lsf", arglist[0]) && (argc > 1) && (!strcmp("|", arglist[1])))) {
+        //printf("lsf with pipe\n");
+        return execWithPipe(arglist); 
+    }
+
+    else if ((strcmp("./lsf", arglist[0]) && (strcmp("./pwd", arglist[0])))) {
+        if ((argc > 1) && (strcmp(arglist[1], "|")))
+            printf("other without pipe\n");
+        if ((argc > 1) && (!strcmp(arglist[1], "|")))
+            printf("other with pipe\n");
+        if ((argc == 1))
+            printf("other without pipe\n");
+    }
+    return execWithoutPipe(arglist);
 }
 
 
@@ -69,7 +92,7 @@ int execWithoutPipe(char *arglist[]) {
 
 
 
-char** tokenize(char* cmdline){
+char** tokenize(char* cmdline, int *argNumber){
     char** arglist = (char **) malloc(sizeof(char *) * (MAXARGS + 1));
     for(int i = 0; i < MAXARGS + 1; ++i) {
 	    arglist[i] = (char *) malloc(sizeof(char) * ARGLEN);
@@ -83,6 +106,7 @@ char** tokenize(char* cmdline){
         strcpy(arglist[arg_ind], token);
         token = strtok(NULL, " \t");
     }
+    *argNumber = arg_ind;
     //printf("arg num : %d\n", arg_ind);
     arglist[arg_ind] = NULL;
     return arglist;

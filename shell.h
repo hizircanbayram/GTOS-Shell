@@ -13,10 +13,10 @@
 #define MAXARGS 10
 #define PROMPT "GTOS-Shell: "
 
-int execute(char* arglist[]);
+int execute(char* arglist[], int argc);
 int execWithPipe(char *arglist[]);
 int execWithoutPipe(char *arglist[]);
-char** tokenize(char* cmdline);
+char** tokenize(char* cmdline, int *argNumber);
 char* read_cmd(char* prompt, FILE* fp);
 
 #endif
