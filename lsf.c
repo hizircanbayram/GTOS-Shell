@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
             curDir = opendir(fileContent);
             redirectFileName = argv[2];
             opr[0] = '<';
+            free(fileContent);
         }
         else if (!strcmp("|", argv[1])) {
 
@@ -64,7 +65,7 @@ int main(int argc, char **argv) {
             writeInfos(curFile->d_name, curFileStat, pipeArr, redirect_fp, opr);
         }
     }
-
+    closedir(curDir);
     return 0;
 }
 

@@ -9,6 +9,7 @@ int main(int argc, char **argv) {
         while (scanf("%c", &c) != EOF) {
            printf("%c", c); 
         }
+        //printf("\n");
     }
     else if (CAT_ONE_ARG(argc)) {
         writeTo(argv[1], ONE_ARGUMENT, pipeArr, NULL); 
@@ -67,6 +68,7 @@ void writeTo(const char *fileName, int flag, const int *pipeArr, const char *red
             free(line);        
             line = NULL;
         }
+        printf("\n");
         fclose(redirect_fp);
     }
     else if (OUTPUT_REDIRECT == flag) {
@@ -82,6 +84,7 @@ void writeTo(const char *fileName, int flag, const int *pipeArr, const char *red
             free(line);        
             line = NULL;
         }
+        fprintf(redirect_fp, "\n");
         fclose(redirect_fp);
     } 
     else if (PIPE_REDIRECT == flag) {

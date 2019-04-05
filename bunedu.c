@@ -6,8 +6,6 @@ int isOption = 0;
 
 // 1 : ard_ind
 int main(int argc, char **argv) {	
-    printf("\n\nBUNEDU\n\n");
-    printf("argc : %d\n", argc);
     int pipeArr[2];
     int arg_ind = 1;
     int arg_limit = 2;

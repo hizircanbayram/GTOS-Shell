@@ -86,7 +86,7 @@ int wcTo(const char *fileName, int flag, const int *pipeArr, const char *redirec
             line = NULL;
             ++lineNumber;
         }
-        fprintf(redirect_fp, "%d", lineNumber);
+        fprintf(redirect_fp, "%d\n", lineNumber);
         fclose(redirect_fp);
     } 
     else if (PIPE_REDIRECT == flag) {

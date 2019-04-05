@@ -5,7 +5,7 @@
 int main(int argc, char **argv) {
     char pwdName[1024] = { 0 };
     getcwd(pwdName, 1024); 
-    int pipeArr[2];
+    //int pipeArr[2] = { 0 };
     if (CAT_ONE_ARG(argc)) {
         printf("%s\n", pwdName);
     }
